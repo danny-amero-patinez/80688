@@ -1,0 +1,111 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>práctica 06</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        h1 {
+            text-align: center;
+            padding-bottom: 15px;
+        }
+        form {
+            box-shadow: 10px 20px 15px;
+            width: 300px;
+            border: 1px solid lightslategray;
+            border-radius: 5px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid lightslategray;
+        }
+        input[type="submit"] {
+            color: white;
+            background-color: blue;
+        }
+        label {
+            display: block;
+        }
+
+        /* Images styles */
+
+        img {
+            box-shadow: 5px 10px 10px red;
+            border-radius: 10% 40% 30%;
+        }
+
+        img.redonda {
+            border-radius: 50%;
+        }
+
+        figure {
+            text-align: center;
+            display: inline-block;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Carga de imagenes</h1>
+    <form action="" id="formulario">
+        <label for="user">Numero de imagen:</label>
+        <input type="text" id="user" name="user">
+        <label for="password">Nombre de imagen:</label>
+        <input type="text" id="password" name="password">
+        <input type="submit" value="Iniciar Sesión">
+    </form>
+    <br><br>
+    <div id="app"></div>
+
+    <script>
+        const loginform = document.getElementById("formulario")
+        loginform.addEventListener("submit", evento => {
+            evento.preventDefault()
+            // console.log(evento)
+            let u = document.getElementById("user").value
+            let p = document.getElementById("password").value
+            //alert("Usuario" + u + "Password" + p)
+            // alert(`Usuario: ${u} y Contraseña: ${p}`)
+            u.split(" ").forEach(element => {
+                const app = document.getElementById("app")
+                const url = "https://picsum.photos/id/"
+                const size = "/200/200"
+                const Picture = (parametro) => {
+                    const src = url+parametro.id+size
+                    return `
+                        <figure>
+                            <img src="${src}" alt="">
+                            <figcaption>
+                                ${parametro.nombre}
+                            </figcaption>
+                        </figure>
+                    `
+                }
+                //app.innerHTML = Picture({id:"1", nombre:"John"})
+                app.innerHTML += Picture({id: element, nombre: p})
+
+                const lista = document.querySelectorAll("img")
+                for (let i = 0; i < lista.length; i++) {
+                    lista[i].addEventListener("click", () => {
+                        //lista[i].style.borderRadius = "50%"
+                        lista[i].classList.toggle("redonda")
+                    });
+                    
+                }
+            });
+        })
+    </script>
+</body>
+</html>
